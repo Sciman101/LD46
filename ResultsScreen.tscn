@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/611Bit.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/611BitBig.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/ResultsScreen.gd" type="Script" id=3]
+[ext_resource path="res://assets/audio/drumroll.wav" type="AudioStream" id=4]
+[ext_resource path="res://assets/audio/baseball_heaven_fever.ogg" type="AudioStream" id=5]
+[ext_resource path="res://assets/textures/Rainbow.png" type="Texture" id=6]
+[ext_resource path="res://src/ScrollingTexture.shader" type="Shader" id=7]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 7 )
+shader_param/speed = Vector2( 0.1, 0 )
+
+[node name="ResultsScreen" type="CanvasLayer"]
+script = ExtResource( 3 )
+
+[node name="Util" type="Node" parent="."]
+
+[node name="Timer" type="Timer" parent="Util"]
+
+[node name="ScrambleTimer" type="Timer" parent="Util"]
+
+[node name="Drumroll" type="AudioStreamPlayer" parent="Util"]
+stream = ExtResource( 4 )
+
+[node name="Music" type="AudioStreamPlayer" parent="Util"]
+stream = ExtResource( 5 )
+
+[node name="Rainbow" type="TextureRect" parent="."]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_scale = Vector2( 1, 1e-05 )
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="VBoxContainer"]
+margin_top = 184.0
+margin_right = 1024.0
+margin_bottom = 232.0
+custom_fonts/font = ExtResource( 1 )
+text = "Results:"
+align = 1
+valign = 1
+
+[node name="Rank" type="Label" parent="VBoxContainer"]
+margin_top = 236.0
+margin_right = 1024.0
+margin_bottom = 364.0
+custom_fonts/font = ExtResource( 2 )
+align = 1
+valign = 1
+
+[node name="Percent" type="Label" parent="VBoxContainer"]
+margin_top = 368.0
+margin_right = 1024.0
+margin_bottom = 416.0
+custom_fonts/font = ExtResource( 1 )
+align = 1
+valign = 1
+[connection signal="timeout" from="Util/ScrambleTimer" to="." method="_on_ScrambleTimer_timeout"]
